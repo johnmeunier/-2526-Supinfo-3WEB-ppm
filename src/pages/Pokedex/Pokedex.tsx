@@ -1,37 +1,36 @@
 import { useState, useEffect } from "react";
 
-const LIMIT_PAGE = 20;
-
-const fetchPokemons = async ({ offset }: { offset: number }) => {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${LIMIT_PAGE}`);
+const fetchPokemons = async (urlToFetch: string) => {
+  const response = await fetch(urlToFetch);
   if (response.ok) {
     const data = await response.json();
-    return data.results;
+    return data;
   }
   throw new Error("Failed to fetch pokemons");
 };
 
 export const PokedexPage = () => {
   const [pokemons, setPokemons] = useState([]);
-  const [current_page, setCurrentPage] = useState(0);
-  const offset = current_page * LIMIT_PAGE;
+  const [next, setNext] = useState(null);
+  const [previous, setPrevious] = useState(null);
+  const [urlToFetch, setUrlToFetch] = useState("https://pokeapi.co/api/v2/pokemon");
 
   useEffect(() => {
-    fetchPokemons({ offset })
-      .then((data) => setPokemons(data))
+    fetchPokemons(urlToFetch)
+      .then((data) => {
+        setNext(data.next);
+        setPrevious(data.previous);
+        setPokemons(data.results);
+      })
       .catch((error) => console.error(error));
-  }, [current_page, offset]);
-
-  const can_go_back = current_page > 0;
-  const can_go_next = (current_page + 1) * LIMIT_PAGE < 150;
+  }, [urlToFetch]);
 
   return (
     <div>
-      <button onClick={() => setCurrentPage(current_page - 1)} disabled={!can_go_back}>
-        {" "}
+      <button onClick={() => setUrlToFetch(previous!)} disabled={!previous}>
         Précédent
       </button>
-      <button onClick={() => setCurrentPage(current_page + 1)} disabled={!can_go_next}>
+      <button onClick={() => setUrlToFetch(next!)} disabled={!next}>
         Suivant
       </button>
       <ul>
