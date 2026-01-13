@@ -1,9 +1,12 @@
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
+import { useState } from "react";
+import Header from "@/layout/Header";
+import Footer from "@/layout/Footer";
 import { useGameOfLife } from "@/hooks/useGameOfLife";
 
 function App() {
-  const { grid, config, actions, iterations } = useGameOfLife();
+  const [size, setSize] = useState(10);
+
+  const { grid, config, actions, iterations, isPlaying } = useGameOfLife({ size });
 
   return (
     <main>
@@ -18,7 +21,9 @@ function App() {
             ))}
           </div>
         ))}
+        <button onClick={actions.togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
         <button onClick={actions.next}>Step #{iterations}</button>
+        <input type="number" value={size} onChange={(e) => setSize(Number(e.target.value))} />
       </div>
       <Footer />
     </main>
