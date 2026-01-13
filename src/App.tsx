@@ -1,9 +1,9 @@
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-import { generateGrid } from "./services/gameOfLife";
+import { useGameOfLife } from "./hooks/useGameOfLife";
 
 function App() {
-  const grid = generateGrid(10);
+  const { grid, config } = useGameOfLife();
 
   return (
     <main>
@@ -13,7 +13,7 @@ function App() {
           <div className="line" key={index}>
             {line.map((cell, index) => (
               <span className="cell" key={index}>
-                {cell ? "🦊" : "🤡"}
+                {cell ? config.alive : config.dead}
               </span>
             ))}
           </div>
