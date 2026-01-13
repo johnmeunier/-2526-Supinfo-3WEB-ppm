@@ -3,7 +3,7 @@ import Footer from "./layout/Footer";
 import { useGameOfLife } from "@/hooks/useGameOfLife";
 
 function App() {
-  const { grid, config } = useGameOfLife();
+  const { grid, config, actions } = useGameOfLife();
 
   return (
     <main>
@@ -18,6 +18,7 @@ function App() {
             ))}
           </div>
         ))}
+        <button onClick={actions.next}>Step</button>
       </div>
       <Footer />
     </main>
