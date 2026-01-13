@@ -4,24 +4,25 @@ import Footer from "@/layout/Footer";
 import { GameOfLifePage } from "@pages/GameOfLife";
 import { PokedexPage } from "@pages/Pokedex";
 import { PokemonPage } from "@pages/Pokemon";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 
 function App() {
   return (
-    <main>
-      <Header />
-      <div className="router">
-        {window.location.pathname === "/pokedex" ? (
-          <PokedexPage />
-        ) : window.location.pathname === "/pokemon" ? (
-          <PokemonPage />
-        ) : window.location.pathname === "/game-of-life" ? (
-          <GameOfLifePage />
-        ) : (
-          <div>404 Not Found</div>
-        )}
-      </div>
-      <Footer />
-    </main>
+    <Router>
+      <main>
+        <Header />
+        <div className="router">
+          <Routes>
+            <Route path="/" element={<Navigate to="/pokedex" replace />} />
+            <Route path="/pokedex" element={<PokedexPage />} />
+            <Route path="/pokemon" element={<PokemonPage />} />
+            <Route path="/game-of-life" element={<GameOfLifePage />} />
+            <Route path="*" element={<div>404 Not Found</div>} />
+          </Routes>
+        </div>
+        <Footer />
+      </main>
+    </Router>
   );
 }
 
