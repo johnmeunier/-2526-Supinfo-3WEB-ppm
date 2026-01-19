@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { config } from "@/services/config";
 
 const fetchPokemons = async (urlToFetch: string) => {
   const response = await fetch(urlToFetch);
@@ -29,7 +30,7 @@ export const PokemonPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { name } = useParams();
   useEffect(() => {
-    fetchPokemons(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    fetchPokemons(`${config.BASE_API_URL}/${name}`)
       .then((data) => {
         setPokemon(data);
       })

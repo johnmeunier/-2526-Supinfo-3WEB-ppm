@@ -2,7 +2,7 @@
 import { setupWorker } from "msw/browser";
 import { handlers } from "./handlers";
 
-const currentMockListOk = [handlers.getMock200];
+const currentMockListOk = [handlers.getMock200, handlers.getPokemon200];
 
 const currentMockListKO = [handlers.getMock500];
 

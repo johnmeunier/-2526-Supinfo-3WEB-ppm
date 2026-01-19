@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { useDebounce } from "use-debounce";
-
-const POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon";
+import { config } from "@/services/config";
 
 const fetchPokemons = async (urlToFetch: string) => {
   const response = await fetch(urlToFetch);
@@ -20,7 +19,7 @@ export const PokedexPage = () => {
   const [limit, setLimit] = useState(20);
   const [count, setCount] = useState(null);
   const [search, setSearch] = useState("");
-  const [urlToFetch, setUrlToFetch] = useState(POKEMON_API_URL);
+  const [urlToFetch, setUrlToFetch] = useState(config.BASE_API_URL);
   const [searchdebounce] = useDebounce(search, 1000);
 
   useEffect(() => {
