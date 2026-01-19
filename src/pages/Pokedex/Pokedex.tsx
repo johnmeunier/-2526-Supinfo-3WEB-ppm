@@ -17,6 +17,7 @@ export const PokedexPage = () => {
   const [previous, setPrevious] = useState(null);
   const [limit, setLimit] = useState(20);
   const [count, setCount] = useState(null);
+  const [search, setSearch] = useState("");
   const [urlToFetch, setUrlToFetch] = useState(POKEMON_API_URL);
 
   useEffect(() => {
@@ -46,11 +47,25 @@ export const PokedexPage = () => {
         <option value={100}>100</option>
         <option value={count || 0}>all</option>
       </select>
-      <ul>
-        {pokemons.map((pokemon: { name: string; url: string }) => (
-          <li key={pokemon.name}>{pokemon.name}</li>
-        ))}
-      </ul>
+      {limit === count && (
+        <input type="text" name="search" id="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+      )}
+      {limit === count && search !== "" && (
+        <ul>
+          {pokemons
+            .filter((pokemon: { name: string; url: string }) => pokemon.name.includes(search))
+            .map((pokemon: { name: string; url: string }) => (
+              <li key={pokemon.name}>{pokemon.name}</li>
+            ))}
+        </ul>
+      )}
+      {limit !== count && (
+        <ul>
+          {pokemons.map((pokemon: { name: string; url: string }) => (
+            <li key={pokemon.name}>{pokemon.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
