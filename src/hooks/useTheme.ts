@@ -12,9 +12,14 @@ const THEME_STORAGE_KEY = "theme";
  */
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>(() => {
+    // Check if localStorage is available
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return "light";
+    }
+
     // Check localStorage first
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    if (savedTheme) {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") {
       return savedTheme;
     }
 
@@ -31,8 +36,10 @@ export const useTheme = () => {
     const root = document.documentElement;
     root.setAttribute("data-theme", theme);
 
-    // Save to localStorage
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    // Save to localStorage (only if available)
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }
   }, [theme]);
 
   const toggleTheme = () => {

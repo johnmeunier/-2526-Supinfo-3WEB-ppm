@@ -20,7 +20,6 @@ const Header = () => {
         <div>
           <h1>Supinfo - 2526 - 3WEB</h1>
           <h2>{title}</h2>
-          <title>{title}</title>
           {user ? (
             <p>
               Logged in as: {user.firstname} {user.lastname} ({user.type} type)
