@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { userAtom } from "./services/store";
+import { ThemeProvider } from "./services/themeContext";
 import routes from "./routes";
 
 const queryClient = new QueryClient();
@@ -23,10 +24,12 @@ function App() {
   }, [setUser]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={routes} />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <RouterProvider router={routes} />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
