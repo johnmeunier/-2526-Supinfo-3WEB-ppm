@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { Link } from "react-router";
 import { userAtom } from "@/services/store";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const titles: Record<string, string> = {
   pokedex: "Pokedex",
@@ -15,16 +16,21 @@ const Header = () => {
 
   return (
     <header>
-      <h1>Supinfo - 2526 - 3WEB</h1>
-      <h2>{title}</h2>
-      <title>{title}</title>
-      {user ? (
-        <p>
-          Logged in as: {user.firstname} {user.lastname} ({user.type} type)
-        </p>
-      ) : (
-        "Authenticating..."
-      )}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <h1>Supinfo - 2526 - 3WEB</h1>
+          <h2>{title}</h2>
+          <title>{title}</title>
+          {user ? (
+            <p>
+              Logged in as: {user.firstname} {user.lastname} ({user.type} type)
+            </p>
+          ) : (
+            "Authenticating..."
+          )}
+        </div>
+        <ThemeToggle />
+      </div>
       <nav>
         <ul>
           <li>
