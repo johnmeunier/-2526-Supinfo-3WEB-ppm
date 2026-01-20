@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useAtom } from "jotai";
+import { userAtom } from "@/services/store";
 import { config } from "@/services/config";
 
 const fetchPokemons = async (urlToFetch: string) => {
@@ -29,6 +31,7 @@ export const PokemonPage = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { name } = useParams();
+  const [user] = useAtom(userAtom);
   useEffect(() => {
     fetchPokemons(`${config.BASE_API_URL}/${name}`)
       .then((data) => {
@@ -44,7 +47,9 @@ export const PokemonPage = () => {
   }
   return pokemon ? (
     <>
-      <h2>{pokemon.name}</h2>
+      <h2>
+        {pokemon.name} {pokemon.types.find((typeInfo) => typeInfo.type.name === user?.type) && "❤️"}
+      </h2>
       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
       <div>
         <h3>Types</h3>

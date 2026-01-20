@@ -1,4 +1,6 @@
+import { useAtom } from "jotai";
 import { Link } from "react-router";
+import { userAtom } from "@/services/store";
 
 const titles: Record<string, string> = {
   pokedex: "Pokedex",
@@ -9,11 +11,20 @@ const titles: Record<string, string> = {
 const Header = () => {
   const title = titles[window.location.pathname.substring(1)];
 
+  const [user] = useAtom(userAtom);
+
   return (
     <header>
       <h1>Supinfo - 2526 - 3WEB</h1>
       <h2>{title}</h2>
       <title>{title}</title>
+      {user ? (
+        <p>
+          Logged in as: {user.firstname} {user.lastname} ({user.type} type)
+        </p>
+      ) : (
+        "Authenticating..."
+      )}
       <nav>
         <ul>
           <li>
